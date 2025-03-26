@@ -38,9 +38,11 @@ Install from package manager:
 
 ### Tools
 
-- `search_users(keyword, limit)`: For searching Weibo users
-- `get_profile(uid)`: Get detailed user information
-- `get_feeds(uid, limit)`: Get user feeds
+- `search_users(keyword, limit)`: 根据关键词搜索微博用户
+- `get_profile(uid)`: 获取用户详细资料信息
+- `get_feeds(uid, limit)`: 获取用户微博动态
+- `get_hot_search(limit)`: 获取微博热搜榜
+- `search_content(keyword, limit, page?)`: 根据关键词搜索微博内容
 
 ### Resources
 
