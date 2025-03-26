@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { DEFAULT_HEADERS, PROFILE_URL, FEEDS_URL } from './consts';
-import { PagedFeeds, SearchResult } from './types';
+import { DEFAULT_HEADERS, PROFILE_URL, FEEDS_URL, HOT_SEARCH_URL } from './consts';
+import { PagedFeeds, SearchResult, HotSearchItem } from './types';
 
 /**
  * 微博爬虫类，用于从微博提取数据
@@ -165,6 +165,64 @@ export class WeiboCrawler {
     } catch (error) {
       console.error(`无法获取UID为'${uid}'的动态`, error);
       return { SinceId: null, Feeds: [] };
+    }
+  }
+
+  /**
+   * 获取微博热搜榜
+   * 
+   * @param limit 返回的最大热搜条目数量
+   * @returns 热搜条目列表
+   */
+  async getHotSearchList(limit: number): Promise<HotSearchItem[]> {
+    try {
+      const response = await axios.get(HOT_SEARCH_URL, {
+        headers: DEFAULT_HEADERS
+      });
+      
+      const data = response.data;
+      const cards = data?.data?.cards || [];
+      
+      if (cards.length === 0) {
+        return [];
+      }
+      
+      // 查找包含热搜数据的card
+      let hotSearchCard = null;
+      for (const card of cards) {
+        if (card.card_group && Array.isArray(card.card_group)) {
+          hotSearchCard = card;
+          break;
+        }
+      }
+      
+      if (!hotSearchCard || !hotSearchCard.card_group) {
+        return [];
+      }
+      
+      // 转换热搜数据为HotSearchItem格式
+      const hotSearchItems: HotSearchItem[] = [];
+      let rank = 1;
+      
+      for (const item of hotSearchCard.card_group) {
+        if (item.desc && rank <= limit) {
+          const hotSearchItem: HotSearchItem = {
+            keyword: item.desc,
+            rank: rank,
+            hotValue: parseInt(item.desc_extr || '0', 10),
+            tag: item.icon ? item.icon.slice(item.icon.lastIndexOf('/') + 1).replace('.png', '') : undefined,
+            url: item.scheme
+          };
+          
+          hotSearchItems.push(hotSearchItem);
+          rank++;
+        }
+      }
+      
+      return hotSearchItems;
+    } catch (error) {
+      console.error('无法获取微博热搜榜', error);
+      return [];
     }
   }
 } 

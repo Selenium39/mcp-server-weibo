@@ -36,4 +36,34 @@ export interface SearchResult {
    * 用户的个人简介
    */
   description: string;
+}
+
+/**
+ * 微博热搜榜条目数据模型
+ */
+export interface HotSearchItem {
+  /**
+   * 热搜关键词
+   */
+  keyword: string;
+  
+  /**
+   * 热搜排名
+   */
+  rank: number;
+  
+  /**
+   * 热搜热度
+   */
+  hotValue: number;
+  
+  /**
+   * 标签类型（如新、热、爆等）
+   */
+  tag?: string;
+  
+  /**
+   * 搜索链接
+   */
+  url?: string;
 } 

@@ -59,6 +59,21 @@ server.tool("get_feeds",
   }
 );
 
+/**
+ * 获取微博热搜榜
+ */
+server.tool("get_hot_search",
+  { 
+    limit: z.number().describe("返回的最大热搜条目数量")
+  },
+  async ({ limit }) => {
+    const hotSearchList = await crawler.getHotSearchList(limit);
+    return {
+      content: [{ type: "text", text: JSON.stringify(hotSearchList) }]
+    };
+  }
+);
+
 // 导出MCP服务器实例和连接函数
 export const connectServer = async () => {
   const transport = new StdioServerTransport();
