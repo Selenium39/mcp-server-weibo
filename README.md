@@ -2,6 +2,10 @@
 
 This is a server based on the [Model Context Protocol](https://modelcontextprotocol.io) for scraping Weibo user information, feeds, and search functionality. This server can help retrieve detailed information about Weibo users, feed content, and perform user searches.
 
+<a href="https://glama.ai/mcp/servers/@Selenium39/mcp-server-weibo">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@Selenium39/mcp-server-weibo/badge" alt="Weibo Server MCP server" />
+</a>
+
 ## Installation
 
 Install from source code:
@@ -60,4 +64,4 @@ MIT License
 
 ## Disclaimer
 
-This project is not affiliated with Weibo and is for learning and research purposes only. 
+This project is not affiliated with Weibo and is for learning and research purposes only.
