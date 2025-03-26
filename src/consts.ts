@@ -20,4 +20,11 @@ export const FEEDS_URL = 'https://m.weibo.cn/api/container/getIndex?type=uid&val
 /**
  * 获取微博热搜榜的URL
  */
-export const HOT_SEARCH_URL = 'https://m.weibo.cn/api/container/getIndex?containerid=106003type%3D25%26t%3D3%26disable_hot%3D1%26filter_type%3Drealtimehot'; 
+export const HOT_SEARCH_URL = 'https://m.weibo.cn/api/container/getIndex?containerid=106003type%3D25%26t%3D3%26disable_hot%3D1%26filter_type%3Drealtimehot';
+
+/**
+ * 搜索微博内容的URL模板
+ * {keyword}将被替换为要搜索的关键词
+ * {page}将被替换为页码
+ */
+export const SEARCH_CONTENT_URL = 'https://m.weibo.cn/api/container/getIndex?containerid=100103type%3D1%26q%3D{keyword}&page_type=searchall&page={page}'; 

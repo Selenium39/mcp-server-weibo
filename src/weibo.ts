@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { DEFAULT_HEADERS, PROFILE_URL, FEEDS_URL, HOT_SEARCH_URL } from './consts';
-import { PagedFeeds, SearchResult, HotSearchItem } from './types';
+import { DEFAULT_HEADERS, PROFILE_URL, FEEDS_URL, HOT_SEARCH_URL, SEARCH_CONTENT_URL } from './consts';
+import { PagedFeeds, SearchResult, HotSearchItem, ContentSearchResult } from './types';
 
 /**
  * 微博爬虫类，用于从微博提取数据
@@ -222,6 +222,113 @@ export class WeiboCrawler {
       return hotSearchItems;
     } catch (error) {
       console.error('无法获取微博热搜榜', error);
+      return [];
+    }
+  }
+
+  /**
+   * 根据关键词搜索微博内容
+   * 
+   * @param keyword 搜索关键词
+   * @param limit 返回的最大微博条目数量
+   * @param page 起始页码（默认为1）
+   * @returns 微博内容列表
+   */
+  async searchWeiboContent(keyword: string, limit: number, page: number = 1): Promise<ContentSearchResult[]> {
+    try {
+      const results: ContentSearchResult[] = [];
+      let currentPage = page;
+      
+      while (results.length < limit) {
+        const url = SEARCH_CONTENT_URL
+          .replace('{keyword}', encodeURIComponent(keyword))
+          .replace('{page}', currentPage.toString());
+          
+        const response = await axios.get(url, {
+          headers: DEFAULT_HEADERS
+        });
+        
+        const data = response.data;
+        const cards = data?.data?.cards || [];
+        
+        // 微博通常会返回多个卡片，我们寻找包含微博内容的卡片组
+        let contentCards: any[] = [];
+        for (const card of cards) {
+          // 微博内容卡片通常有card_type=9
+          if (card.card_type === 9) {
+            contentCards.push(card);
+          } 
+          // 处理卡片组
+          else if (card.card_group && Array.isArray(card.card_group)) {
+            const contentGroup = card.card_group.filter((item: any) => item.card_type === 9);
+            contentCards = contentCards.concat(contentGroup);
+          }
+        }
+        
+        if (contentCards.length === 0) {
+          break; // 没有更多内容，退出循环
+        }
+        
+        // 处理每个内容卡片
+        for (const card of contentCards) {
+          if (results.length >= limit) {
+            break;
+          }
+          
+          const mblog = card.mblog;
+          if (!mblog) continue;
+          
+          // 提取图片链接
+          const pics: string[] = [];
+          if (mblog.pics && Array.isArray(mblog.pics)) {
+            for (const pic of mblog.pics) {
+              if (pic.url) {
+                pics.push(pic.url);
+              }
+            }
+          }
+          
+          // 提取视频链接
+          let videoUrl = undefined;
+          if (mblog.page_info && mblog.page_info.type === 'video') {
+            videoUrl = mblog.page_info.media_info?.stream_url || 
+                       mblog.page_info.urls?.mp4_720p_mp4 ||
+                       mblog.page_info.urls?.mp4_hd_mp4 ||
+                       mblog.page_info.urls?.mp4_ld_mp4;
+          }
+          
+          // 创建内容搜索结果对象
+          const contentResult: ContentSearchResult = {
+            id: mblog.id,
+            text: mblog.text,
+            created_at: mblog.created_at,
+            reposts_count: mblog.reposts_count,
+            comments_count: mblog.comments_count,
+            attitudes_count: mblog.attitudes_count,
+            user: {
+              id: mblog.user.id,
+              screen_name: mblog.user.screen_name,
+              profile_image_url: mblog.user.profile_image_url,
+              verified: mblog.user.verified
+            },
+            pics: pics.length > 0 ? pics : undefined,
+            video_url: videoUrl
+          };
+          
+          results.push(contentResult);
+        }
+        
+        currentPage++;
+        
+        // 检查是否有下一页
+        if (!data?.data?.cardlistInfo?.page || data.data.cardlistInfo.page === "1") {
+          break;
+        }
+      }
+      
+      return results.slice(0, limit);
+    } catch (error) {
+      console.error(`无法搜索关键词为'${keyword}'的微博内容`, error);
       return [];
     }
   }

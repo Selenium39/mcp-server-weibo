@@ -74,6 +74,23 @@ server.tool("get_hot_search",
   }
 );
 
+/**
+ * 根据关键词搜索微博内容
+ */
+server.tool("search_content",
+  { 
+    keyword: z.string().describe("搜索微博内容的关键词"),
+    limit: z.number().describe("返回的最大微博条目数量"),
+    page: z.number().optional().describe("起始页码，默认为1")
+  },
+  async ({ keyword, limit, page }) => {
+    const contents = await crawler.searchWeiboContent(keyword, limit, page || 1);
+    return {
+      content: [{ type: "text", text: JSON.stringify(contents) }]
+    };
+  }
+);
+
 // 导出MCP服务器实例和连接函数
 export const connectServer = async () => {
   const transport = new StdioServerTransport();

@@ -66,4 +66,59 @@ export interface HotSearchItem {
    * 搜索链接
    */
   url?: string;
+}
+
+/**
+ * 微博内容搜索结果数据模型
+ */
+export interface ContentSearchResult {
+  /**
+   * 微博ID
+   */
+  id: string;
+  
+  /**
+   * 微博文本内容
+   */
+  text: string;
+  
+  /**
+   * 创建时间
+   */
+  created_at: string;
+  
+  /**
+   * 转发数
+   */
+  reposts_count: number;
+  
+  /**
+   * 评论数
+   */
+  comments_count: number;
+  
+  /**
+   * 点赞数
+   */
+  attitudes_count: number;
+  
+  /**
+   * 发布该微博的用户信息
+   */
+  user: {
+    id: number;
+    screen_name: string;
+    profile_image_url: string;
+    verified: boolean;
+  };
+  
+  /**
+   * 图片链接列表（如果有）
+   */
+  pics?: string[];
+  
+  /**
+   * 视频链接（如果有）
+   */
+  video_url?: string;
 } 
