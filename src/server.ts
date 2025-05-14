@@ -16,6 +16,7 @@ const crawler = new WeiboCrawler();
  * 根据关键词搜索微博用户
  */
 server.tool("search_users",
+  "根据关键词搜索微博用户并返回匹配的用户列表",
   { 
     keyword: z.string().describe("查找用户的搜索词"),
     limit: z.number().describe("返回的最大用户数量")
@@ -32,6 +33,7 @@ server.tool("search_users",
  * 获取微博用户的资料信息
  */
 server.tool("get_profile",
+  "获取指定微博用户的详细资料信息",
   { 
     uid: z.number().describe("微博用户的唯一标识符")
   },
@@ -47,6 +49,7 @@ server.tool("get_profile",
  * 获取微博用户的动态(帖子)
  */
 server.tool("get_feeds",
+  "获取指定微博用户的最新动态和帖子",
   { 
     uid: z.number().describe("微博用户的唯一标识符"),
     limit: z.number().describe("返回的最大动态数量")
@@ -63,6 +66,7 @@ server.tool("get_feeds",
  * 获取微博热搜榜
  */
 server.tool("get_hot_search",
+  "获取当前微博热搜榜的热门话题列表",
   { 
     limit: z.number().describe("返回的最大热搜条目数量")
   },
@@ -78,6 +82,7 @@ server.tool("get_hot_search",
  * 根据关键词搜索微博内容
  */
 server.tool("search_content",
+  "根据关键词搜索微博内容并返回相关的微博帖子",
   { 
     keyword: z.string().describe("搜索微博内容的关键词"),
     limit: z.number().describe("返回的最大微博条目数量"),

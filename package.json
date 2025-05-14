@@ -1,6 +1,6 @@
 {
   "name": "mcp-server-weibo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Model Context Protocol服务器，用于抓取微博用户信息、动态和搜索等功能",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
