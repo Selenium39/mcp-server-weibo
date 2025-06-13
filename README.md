@@ -67,3 +67,6 @@ MIT License
 ## Disclaimer
 
 This project is not affiliated with Weibo and is for learning and research purposes only.
+
+## Other
+mcp-server-weibo is indexed and certified by [MCP Review](https://mcpreview.com/mcp-servers/selenium39/mcp-server-weibo)
