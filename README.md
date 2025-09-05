@@ -1,14 +1,8 @@
-# Weibo MCP Server (TypeScript Version)
+# Weibo MCP Server (TypeScript 版本)
 
-This is a server based on the [Model Context Protocol](https://modelcontextprotocol.io) for scraping Weibo user information, feeds, and search functionality. This server can help retrieve detailed information about Weibo users, feed content, and perform user searches.
+## 安装
 
-<a href="https://glama.ai/mcp/servers/@Selenium39/mcp-server-weibo">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@Selenium39/mcp-server-weibo/badge" alt="Weibo Server MCP server" />
-</a>
-
-## Installation
-
-Install from source code:
+从源码安装：
 
 ```json
 {
@@ -25,48 +19,49 @@ Install from source code:
 }
 ```
 
-Install from package manager:
+从包管理器安装：
 
 ```json
 {
     "mcpServers": {
         "weibo": {
             "command": "npx",
-            "args": ["mcp-server-weibo"],
+            "args": ["mcp-server-weibo"]
         }
     }
 }
 ```
 
-## Components
+## 组件
 
 ### Tools
 
-- `search_users(keyword, limit)`: 根据关键词搜索微博用户
-- `get_profile(uid)`: 获取用户详细资料信息
-- `get_feeds(uid, limit)`: 获取用户微博动态
-- `get_hot_search(limit)`: 获取微博热搜榜
-- `search_content(keyword, limit, page?)`: 根据关键词搜索微博内容
+- `search_users(keyword, limit)`：根据关键词搜索微博用户
+- `get_profile(uid)`：获取用户详细资料信息
+- `get_feeds(uid, limit)`：获取用户微博动态
+- `get_hot_search(limit)`：获取微博热搜榜
+- `search_content(keyword, limit, page?)`：根据关键词搜索微博内容
 
 ### Resources
 
-None
+无
 
 ### Prompts
 
-None
+无
 
-## Requirements
+## 系统要求
 
 - Node.js >= 18.0.0
 
-## License
+## 许可证
 
 MIT License
 
-## Disclaimer
+## 免责声明
 
-This project is not affiliated with Weibo and is for learning and research purposes only.
+本项目与微博无关，仅用于学习和研究目的。
 
-## Other
-mcp-server-weibo is indexed and certified by [MCP Review](https://mcpreview.com/mcp-servers/selenium39/mcp-server-weibo)
+## 赞助
+
+本项目由 [ChatTempMail](https://chat-tempmail.com/zh) 赞助支持，[ChatTempMail](https://chat-tempmail.com/zh) 是您的临时邮箱地址首选解决方案。使用 [ChatTempMail](https://chat-tempmail.com/zh)，您可以无限试用 Cursor、Augment Code 和 Windsurf 等工具,立即保护您的隐私并助力您的开发！
