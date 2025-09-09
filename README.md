@@ -62,6 +62,6 @@ MIT License
 
 本项目与微博无关，仅用于学习和研究目的。
 
-## 赞助
+## MCP Server推荐
 
-本项目由 [ChatTempMail](https://chat-tempmail.com/zh) 赞助支持，[ChatTempMail](https://chat-tempmail.com/zh) 是您的临时邮箱地址首选解决方案。使用 [ChatTempMail](https://chat-tempmail.com/zh)，您可以无限试用 Cursor、Augment Code 和 Windsurf 等工具,立即保护您的隐私并助力您的开发！
+[mcp-server-tempmail](https://chat-tempmail.com/zh/mcp-server)
